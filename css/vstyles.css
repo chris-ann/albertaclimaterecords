@@ -1,0 +1,499 @@
+
+
+/*---- Load Map----*/
+
+.preload { 
+  position: absolute;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 4500px;
+  height: 2000px;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.preload img {
+  position: absolute;
+  left: 50vw;
+  top: 50vh;
+  margin-left: -50px;
+  margin-top: -50px;
+}
+
+#rSidebar {
+ position: relative;
+ width: 350px;
+ height: 100vh;
+ top: 0vh;
+ float: right;
+ z-index:4;
+ padding: 0px 0px 0px 50px;
+ background-color: #fff;
+ transition: transform 0.3s, width 0.3s;
+}
+
+/* EXPANDED DETAIL VIEW */
+#rSidebar.vActive {
+ width: 74vw;
+ padding: 0px 0px 0px 4vw;
+}
+
+
+#vizToggle {
+		font-size: 12px;
+		line-height: 30px;
+		font-weight: normal;
+		text-align: center;
+		height: 40px;
+}
+
+#vizToggle a, #vizToggle a:visited {
+  color: #969696;
+  text-decoration: none;
+}
+
+#summary {
+  float: left;
+  width: 25%;
+  height: 40px;
+  padding: 5px;
+  background-color: #e5e5e5;
+  overflow: hidden;
+}
+
+#summary:hover {
+  font-family: 'ralewaysemibold', Arial, sans;
+  background-color: #f0f0f0;
+}
+
+#summary.vActive {
+  background-color: #fff;
+  font-family: 'ralewaysemibold', Arial, sans;
+  width: 50%;
+  min-width: 150px;
+}
+
+#summary.vActive:hover {
+  background-color: #fff;
+}
+
+#summary:before {
+    content: "BACK TO TREND SUMMARY";
+}
+
+#summary.vActive:before {
+    content: "TREND SUMMARY";
+}
+
+#detail {
+  float: right;
+  width: 50%;
+  text-align: center;
+  height: 40px;
+  padding: 5px;
+  background-color: #e5e5e5;
+}
+
+#detail:hover {
+  font-family: 'ralewaysemibold', Arial, sans;
+  background-color: #f0f0f0;
+}
+
+#detail.vActive:hover {
+  background-color: #fff;
+}
+#detail.vActive {
+  background-color: #fff;
+  font-weight: bold;
+  width: 75%;
+  overflow: hidden;
+  font-family: 'ralewaysemibold', Arial, sans;
+}
+
+#detail:before {
+  content: "GO TO DETAIL VIEW";
+}
+
+#detail.vActive:before {
+  content: "DETAIL VIEW: trends and yearly variability from 1950 - 2010 for all climate indices";
+}
+
+#infobox {
+  position: absolute; 
+  left: 0px; 
+  top: 0px;
+  z-index:4;
+}
+
+*,
+*:after,
+*::before {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+}
+
+.menu-main,
+.menu-main ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-transform: none;
+	font-size: 14px;	
+}
+
+.menu-wrapper {
+		position: fixed;
+		height: 100%;
+		top: 30px;
+  	right: 300px;
+		overflow: hidden;
+		width: 50px;
+		-webkit-transform: translateX(0px);
+		-moz-transform: translateX(0px);
+		transform: translateX(0px);
+		-webkit-transition: -webkit-all 0.3s;
+		-moz-transition: -moz-all 0.3s;
+		transition: all 0.3s;
+    background-color: #b1b1b1;
+    z-index: 5; 
+    border-left: 1px solid #b1b1b1;
+}
+
+.menu-wrapper.vActive {
+  right: 70vw;
+  width: 4vw;
+  min-width: 50px;
+}
+
+.menu-main a {
+		display: block;
+    height: 100%;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: 'ralewaybold', Arial, sans-serif;
+}
+
+/* The list item childen will float left */
+.menu-main > li { 
+		display: block;
+		float: left;
+		height: 100%;
+    text-align: center;
+    line-height: 25px;
+}
+
+.menu > li:first-child {
+		background: #b1b1b1;
+		height: 40px;
+		color: #fff;
+		line-height: 30px;
+		padding: 5px;
+		font-size: 12px;
+		font-weight: normal;
+}
+
+.menu > li img{
+  width: 100%;
+  height: auto;
+}
+
+.menu > li a:not(:last-child){
+  background-color: #e5e5e5;
+  color: #969696;
+  height: 50px;
+  padding: 5px;
+}
+
+.menu > li a:not(:last-child):visited {
+  font-weight: normal;
+  color: #969696;
+}
+
+
+.menu > li a:not(:last-child):hover {
+  background-color: #f0f0f0;
+}
+
+
+.menu > li a.activeBut {
+  background-color: #fff;
+}
+
+.menu > li a.activeBut:hover {
+  background-color: #fff;
+}
+
+.menu > li a.activeBut.removeBut {
+  background-color: #c7c7c7;
+  color: #969696;
+  box-shadow: none;
+}
+
+.menu-main:after {
+		display: table;
+		clear: both;
+		content: "";
+}
+
+.scroller {
+		position: absolute;
+		overflow-y: none;
+		min-width: 250px;
+		height: 100%;
+}
+
+.menu {
+		text-align: left;
+		font-size: 18px;
+		font-weight: bold;
+}
+
+/*.menu li:not(:first-child),
+.menu li li {
+		box-shadow: inset 0 1px #c6d0da;
+}*/
+
+.submenu li {
+		overflow: hidden;
+		height: 0;
+		-webkit-transition: height 0.3s;
+		-moz-transition: height 0.3s;
+		transition: height 0.3s;
+		font-size: 10px;
+}
+
+.submenu li a {
+		color: #3e3e3e;
+}
+
+
+/* ICONS */
+
+.icon:before {
+		display: inline-block;
+		width: 35px;
+		height: 35px;
+		text-align: center;
+		margin-left: 5px;
+		margin-right: 15px;
+}
+
+.chooseidx::before { content: url(../imgs/menu_w.png); vertical-align: -5px;}
+.gsico::before { content: url(../imgs/gs-2.png); vertical-align: -10px;}
+.gsico:hover::before, .gsico.activeBut::before { content: url(../imgs/gs.png); vertical-align: -10px;}
+.hwico::before { content: url(../imgs/hw-2.png); vertical-align: -10px;}
+.hwico:hover::before, .hwico.activeBut::before { content: url(../imgs/hw.png); vertical-align: -10px;}
+.xg25ico::before { content: url(../imgs/xg25-2.png); vertical-align: -10px; }
+.xg25ico:hover::before, .xg25ico.activeBut::before {content: url(../imgs/xg25.png); vertical-align: -10px;}
+.fdico::before { content: url(../imgs/fd-2.png); vertical-align: -10px;}
+.fdico:hover::before, .fdico.activeBut::before {content: url(../imgs/fd.png); vertical-align: -10px;}
+.xl0ico::before { content: url(../imgs/xl0-2.png); vertical-align: -10px;}
+.xl0ico:hover::before, .xl0ico.activeBut::before {content: url(../imgs/xl0.png); vertical-align: -10px;}
+.ml25ico::before { content: url(../imgs/ml25-2.png); vertical-align: -10px;}
+.ml25ico:hover::before, .ml25ico.activeBut::before{content: url(../imgs/ml25.png); vertical-align: -10px;}
+.info::before {content: url(../imgs/info.png); vertical-align: -12px;}
+.info:hover::before {content: url(../imgs/info.png); vertical-align: -12px;}
+
+
+
+.menu-wrapper.open-all,
+.menu-wrapper.open-part {
+		-webkit-transform: translateX(0px);
+		-moz-transform: translateX(0px);
+		transform: translateX(0px);
+}
+
+.menu-wrapper.open-all .submenu li,
+.menu-wrapper.open-part .submenu li {
+		height: 40px
+}
+
+.menu-wrapper.open-all {
+		min-width: 250px;	
+}
+
+.menu-wrapper.open-all .submenu li {
+		height: 40px;
+}
+
+
+@media screen and (max-width: 422px) { 
+	.menu-wrapper.open-all {
+			-webkit-transform: translateX(0px);
+			-moz-transform: translateX(0px);
+			transform: translateX(0px);
+			width: 100%;
+	}
+
+	.menu-wrapper.open-all .scroller {
+			width: 130%
+	}
+}
+
+.menu-wrapper p {
+  font-size: 11px;
+  line-height: 1.4em;
+}
+
+/*----- MENU DROPDOWN BOXES-----*/
+
+.gsInfo, .hwInfo, .xg25Info, .fdInfo, .xl0Info, .ml25Info, .infoInfo {
+  background:#e5e5e5;
+  color:#333;
+  left: 0;
+  top: -250px;
+  width: 100%;
+  height: 0px;
+  padding: 0px 40px 0px 60px; /*top, right, bottom, left*/
+  font-size: 10px;
+  font-weight: normal;
+  line-height: 16px;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition:all 500ms ease; 
+}
+
+.activeBut ~ .gsInfo, .activeBut ~ .hwInfo, .activeBut ~ .xg25Info, .activeBut ~ .fdInfo, .activeBut ~ .xl0Info, .activeBut ~ .ml25Info  {
+  background:#fff;
+}
+
+.infoInfo {
+  background: #b1b1b1;
+  color: #fff;
+} 
+
+.infoInfo a:visited {
+  color: #fff;
+}
+
+.infoInfo a:link {
+  color: #fff;
+}
+
+#infotoggle, 
+#gstoggle, 
+#hwtoggle, 
+#xg25toggle, 
+#fdtoggle, 
+#xl0toggle, 
+#ml25toggle {
+  position:absolute;
+  appearance:none;
+  cursor:pointer;
+  left:-100%;
+  top:-100%;
+}
+
+#infotoggle + label, 
+#gstoggle + label, 
+#hwtoggle + label, 
+#xg25toggle + label, 
+#fdtoggle + label, 
+#xl0toggle + label, 
+#ml25toggle + label {
+  cursor:pointer;
+  padding: 5px;
+  margin: 10px;
+  position: aboslute;
+  float: right;
+  border-radius: 2px;
+  color: #fff;
+  background: #b1b1b1;
+  line-height: 15px;
+  font-size: 12px;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  transition: all 500ms ease;
+}
+
+#infotoggle + label {
+  float: none;
+  margin: 0;
+  line-height: 12px;
+  padding: 10px 100px 10px 5px;
+}
+
+#infotoggle + label:hover {
+  
+}
+
+#gstoggle + label:after, 
+#hwtoggle + label:after, 
+#xg25toggle + label:after, 
+#fdtoggle + label:after, 
+#xl0toggle + label:after, 
+#ml25toggle + label:after {
+  content:"?" 
+}
+
+#infotoggle + label:after {
+  content: "OTHER INFO";
+}
+
+#infotoggle:checked ~ .infoInfo, 
+#gstoggle:checked ~ .gsInfo, 
+#hwtoggle:checked ~ .hwInfo, 
+#xg25toggle:checked ~ .xg25Info, 
+#fdtoggle:checked ~ .fdInfo, 
+#xl0toggle:checked ~ .xl0Info, 
+#ml25toggle:checked ~ .ml25Info  {
+  top: 0;
+  min-height: 140px;
+  transition:all 500ms ease;
+}
+
+#infotoggle:checked ~ .infoInfo {
+  height: 300px;
+}
+
+#gstoggle:checked ~ .gsInfo {
+  height: 180px;
+}
+
+#xg25toggle:checked ~ .xg25Info {
+  height: 160px;
+}
+
+#hwtoggle:checked ~ .hwInfo {
+  height: 180px;
+}
+
+/* colour of label after selected */
+#gstoggle:checked + label, 
+#hwtoggle:checked + label, 
+#xg25toggle:checked + label, 
+#fdtoggle:checked + label, 
+#xl0toggle:checked + label, 
+#ml25toggle:checked + label {
+  background:#000;
+}
+
+#infotoggle:checked + label {
+  background: #b1b1b1;
+} 
+
+#gstoggle:checked + label:after, 
+#hwtoggle:checked + label:after, 
+#xg25toggle:checked + label:after, 
+#fdtoggle:checked + label:after, 
+#xl0toggle:checked + label:after, 
+#ml25toggle:checked + label:after {
+  content:"X"
+}
+
+#infotoggle:checked + label:after {
+  content:"OTHER INFO [X]";
+}
+
+
+
+.divText {
+  display: none;
+}
+
+#year:hover + div {
+  display: block;
+
+}
