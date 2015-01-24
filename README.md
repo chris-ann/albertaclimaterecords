@@ -8,5 +8,5 @@
 <p>Design and visualization programming by Christine Clark</p>
 <p>Data formatting and programming help from Devin Sawatzky</p>
 <p>Data provided by Dr. Stefan Kienzle at the University of Lethbridge</p> 
-<hr />
+
 <p>For more information, contact Christine at <a href="mailto:hello@chrisann.ca">hello@chrisann.ca</a></p>
