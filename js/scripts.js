@@ -6,13 +6,16 @@ var vViz = 0;
 var tViz = 1;
 var log1 = 0;
 var logFilter = [];
+var hereLat;
+var hereLon;
+var ABID;
 
 var COLORS = {'fd': '#75adf0', 'gs': '#69bd7f', 'hw': '#fb9956', 'xg25': '#da4a4e', 'xl0': '#3e79e4', 'ml25': '#b67433'};
 var NCOLORS = {'fd': '#d9ae72', 'gs': '#8c8a85', 'hw': '#4aa9d2', 'xg25': '#4f9dac', 'xl0': '#ce8e52', 'ml25': '#1253af'};
 
 
 function fadeLoader() {
-  $(".preload").fadeOut('slow');
+  $(".loading").fadeOut('slow');
 }
 
 function initialize() {
@@ -25,7 +28,7 @@ function initialize() {
     zoom: 5,
     mapTypeId: layer,
     mapTypeControlOptions: {
-    mapTypeIds: [layer]
+        mapTypeIds: [layer]
     }
   }, mapOptions);
   
@@ -34,29 +37,29 @@ function initialize() {
   // Load a GeoJSON from the same server as our demo.
   mapy.data.loadGeoJson('AB_10K-ID.json');
   
-
-  
   // set initial style
-  mapy.data.setStyle({
+  var baseStyle = {
     fillColor: 'white',
     fillOpacity: 0.0,
     strokeWeight: 0.05,
-    strokeColor: '#333333'
-  });
-  
+    strokeColor: '#6a6a6a'
+  }
+  mapy.data.setStyle(baseStyle);
+
   mapy.data.addListener('click', function(event) {
     mapy.data.revertStyle();
     hereLat = event.feature.getProperty('Lat');
     hereLon = event.feature.getProperty('Lon') + 0.5;
-
-    if (tViz == 1){
-    loadTable(event.feature.getProperty('csvfile'), runHere);}
-    else if (vViz == 1){
-    loadTable(event.feature.getProperty('csvfile'), runVariability);
-    mapy.setCenter({lat: hereLat, lng: hereLon});
-    mapy.setZoom(10);
-    }
     
+    if (tViz === 1) {
+        loadTable(event.feature.getProperty('csvfile'), runHere); 
+    } 
+//      else if (vViz === 1){
+//        loadTable(event.feature.getProperty('csvfile'), runVariability);
+//        mapy.setCenter({lat: hereLat, lng: hereLon});
+//        mapy.setZoom(10);
+//    }
+      
     ABID = event.feature.getProperty('AB_ID');
     
     //For CSV Download
@@ -66,31 +69,53 @@ function initialize() {
     $("#exportdoc").addClass("exportShow");
     
     //Highlight selected cell
-    mapy.data.overrideStyle(event.feature, {strokeWeight: 1.2, strokeColor: '#000000'});
+    mapy.data.overrideStyle(event.feature, {strokeWeight: 0.5, strokeColor: '#000000'});
   });
     
   jQuery('.filter').each(function(e) {
+    
     jQuery(jQuery(this)).click(function(z) {
+      
       z.preventDefault();
       what=$(this).attr('id');
-      mapy.data.setStyle({
-        fillColor: 'white',
-        fillOpacity: 0.0,
-        strokeWeight: 0.05,
-        strokeColor: '#000000'
-      });
+      mapy.data.setStyle(baseStyle);
+      
       if (tViz == 1){
+        
+        $(".spinner").fadeIn('5000'); // FADE IN THE LOADING ANIMATION
+        
         mapy.data.setStyle({});
         jQuery('.filter').each(function() {
           $(this).removeClass('activeBut');
         });
-        mapy.data.setStyle(function(feature) {
-          return {'fillOpacity': feature.k[what]['fillOpacity'], 'strokeWeight': 0.05, 'fillColor': (feature.k[what]['s'] == 'p' ? COLORS[what] : NCOLORS[what])};
-        });
-      fadeLoader();
         
-      }
+        mapy.data.setStyle(function(feature) {
+            var activeIndex = feature.getProperty(what);
+            //print(activeIndex);
+            var fillOp = activeIndex.fillOpacity;
+            var posNeg = activeIndex.s;
 
+            if (posNeg === 'p'){
+                return {
+                    fillOpacity: fillOp,
+                    fillColor: COLORS[what],
+                    strokeWeight: 0.05
+                };
+            } else {
+                return {
+                    fillOpacity: fillOp,
+                    fillColor: NCOLORS[what],
+                    strokeWeight: 0.05
+                };
+            }
+            
+          //return {'fillOpacity': feature.k[what]['fillOpacity'], 'strokeWeight': 0.05, 'fillColor': (feature.k[what]['s'] == 'p' ? COLORS[what] : NCOLORS[what])};
+        });
+        
+        $(".spinner").fadeOut('3000'); // FADE OUT AFTER MAP LOADS... BUT IT ALWAYS FADES OUT BEFORE MAP IS DONE
+  
+      }
+      
       $(this).toggleClass("activeBut");
       
       if (csvFile !== undefined) {
@@ -101,7 +126,8 @@ function initialize() {
         if(tViz == 1){runHere();} 
         else if (vViz == 1){loadTable(csvFile, runVariability); }
       }
-  
+      
+      
     });
   });
   
@@ -169,6 +195,7 @@ function initialize() {
   });
   
 
+fadeLoader();
 
 }
 
