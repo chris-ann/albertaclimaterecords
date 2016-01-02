@@ -14,11 +14,12 @@ var COLORS = {'fd': '#75adf0', 'gs': '#69bd7f', 'hw': '#fb9956', 'xg25': '#da4a4
 var NCOLORS = {'fd': '#d9ae72', 'gs': '#8c8a85', 'hw': '#4aa9d2', 'xg25': '#4f9dac', 'xl0': '#ce8e52', 'ml25': '#1253af'};
 
 
-function fadeLoader() {
-  $(".loading").fadeOut('slow');
-}
 
 function initialize() {
+    
+  //fade out loading gif at page load
+  $(".loading").fadeOut('slow');
+    
   var mapOptions = {
     streetViewControl: false
   };
@@ -36,40 +37,49 @@ function initialize() {
 
   // Load a GeoJSON from the same server as our demo.
   mapy.data.loadGeoJson('AB_10K-ID.json');
-  
-  // set initial style
+    
+ // set initial style
   var baseStyle = {
     fillColor: 'white',
     fillOpacity: 0.0,
     strokeWeight: 0.05,
     strokeColor: '#6a6a6a'
   }
+  
   mapy.data.setStyle(baseStyle);
 
   mapy.data.addListener('click', function(event) {
     mapy.data.revertStyle();
     hereLat = event.feature.getProperty('Lat');
-    hereLon = event.feature.getProperty('Lon') + 0.5;
+    hereLon = event.feature.getProperty('Lon') + (window.innerWidth*.00026); //add a fraction to center horizontally
+    csvFile = event.feature.getProperty('csvfile');
+      
+    console.log(window.innerWidth*.00026);
     
+      // FOR TREND SUMMARY
     if (tViz === 1) {
-        loadTable(event.feature.getProperty('csvfile'), runHere); 
+        loadTable(csvFile, runHere); 
+        //Highlight selected cell
+        mapy.data.overrideStyle(event.feature, {strokeWeight: 0.75, strokeColor: '#000000'});
     } 
-//      else if (vViz === 1){
-//        loadTable(event.feature.getProperty('csvfile'), runVariability);
-//        mapy.setCenter({lat: hereLat, lng: hereLon});
-//        mapy.setZoom(10);
-//    }
+      // FOR DETAIL VISUALIZATION
+      else if (vViz === 1){
+        loadTable(csvFile, runVariability);
+        
+          //Recenter and zoom map into location
+        mapy.setCenter({lat: hereLat, lng: hereLon});
+        mapy.setZoom(10);
+          //Highlight selected cell
+        mapy.data.overrideStyle(event.feature, {strokeWeight: 1, strokeColor: '#000000'});
+   }
       
     ABID = event.feature.getProperty('AB_ID');
     
     //For CSV Download
-    csvFile = event.feature.getProperty('csvfile');
     var a = document.getElementById('exportdoc');
     a.href = csvFile;
     $("#exportdoc").addClass("exportShow");
-    
-    //Highlight selected cell
-    mapy.data.overrideStyle(event.feature, {strokeWeight: 0.5, strokeColor: '#000000'});
+
   });
     
   jQuery('.filter').each(function(e) {
@@ -80,6 +90,7 @@ function initialize() {
       what=$(this).attr('id');
       mapy.data.setStyle(baseStyle);
       
+        //FOR TREND SUMMARY
       if (tViz == 1){
         
         $(".spinner").fadeIn('5000'); // FADE IN THE LOADING ANIMATION
@@ -91,7 +102,7 @@ function initialize() {
         
         mapy.data.setStyle(function(feature) {
             var activeIndex = feature.getProperty(what);
-            //print(activeIndex);
+            
             var fillOp = activeIndex.fillOpacity;
             var posNeg = activeIndex.s;
 
@@ -108,8 +119,7 @@ function initialize() {
                     strokeWeight: 0.05
                 };
             }
-            
-          //return {'fillOpacity': feature.k[what]['fillOpacity'], 'strokeWeight': 0.05, 'fillColor': (feature.k[what]['s'] == 'p' ? COLORS[what] : NCOLORS[what])};
+
         });
         
         $(".spinner").fadeOut('3000'); // FADE OUT AFTER MAP LOADS... BUT IT ALWAYS FADES OUT BEFORE MAP IS DONE
@@ -131,16 +141,17 @@ function initialize() {
     });
   });
   
-  
+  // Start visualization with Growing Season
   jQuery('#gs').click();
 
+
   
+//---- BUTTONS ---- //
+    
   $("#detail").click(function(){
     
     logFilter[log1] = what;
     log1++;
-
-    //print(logFilter[0]);
 
     if (tViz == 1){
       vViz = 1;
@@ -148,12 +159,7 @@ function initialize() {
       $(".transformdiv").toggleClass('vActive');
       mapy.panTo({lat: hereLat, lng: hereLon});
       mapy.setZoom(10);
-      mapy.data.setStyle({
-          fillColor: 'white',
-          fillOpacity: 0.0,
-          strokeWeight: 0.05,
-          strokeColor: '#000000'
-        });
+      mapy.data.setStyle(baseStyle);
       loadTable(csvFile, runVariability);
     }
   });
@@ -194,11 +200,7 @@ function initialize() {
     $(".showPage").removeClass('showPage');
   });
   
-
-fadeLoader();
-
 }
-
 
 
 google.maps.event.addDomListener(window, 'load', initialize);
