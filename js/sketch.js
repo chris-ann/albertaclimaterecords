@@ -34,8 +34,8 @@ var  x1 = 50; // MARGINS
 var x2;
 
 //---- DATA VARIABLES---//
-var yearPos; 
-var idxVar; 
+var yearPos;
+var idxVar;
 
 //-----SCALE OF COROPLETH MAP----//
 var gradientScale = 50;
@@ -43,7 +43,7 @@ var gradientScale = 50;
 //---FONTS----//
 var fsm = 10;
 var fmed = 13;
-var flg = 18;
+var flg = 16;
 var fxlg = 23;
 var sans = "Arial";
 var serif = "Georgia";
@@ -102,8 +102,11 @@ function windowResized() {
   }
 }
 
-function runVariability (here) {
-  varViz = true;
+//Detail View for Variability & Trends
+
+function runVariability(here) {
+  
+ varViz = true;
   mapViz = false;
   
   removeElements();
@@ -115,11 +118,11 @@ function runVariability (here) {
   resizeCanvas(vizWidth, vizHeight);
   
   xScale = (vizWidth - (x1*2))/61; //50 px padding on left and right
-  yScale = (vizHeight - 80)/-365; //padding 25px on bottom and top, -365 to move into negative
+  yScale = (vizHeight - 80)/-365; //padding 40px on bottom and top, -365 to move into negative
   
   //--Move the origin to the bottom --- //
   push();
-  translate(x1, vizHeight - 30); // 50px padding on left, 20px padding on top
+  translate(x1, vizHeight - 30); // 50px padding on left, 40px padding on top
   
   
   //DISPLAY LOCATION INFORMATION
@@ -195,18 +198,18 @@ function runVariability (here) {
     
     varDivNode = createDiv(" ");
     varDivNode.parent(vizContainer);
-    varDivNode.position(yearPos + 47, vizHeight - (idxVar * -1) + 10);
-    varDivNode.size(7, 7);
+    //varDivNode.style("background-color", 'black');
+    varDivNode.position(yearPos + (x1 * 2) + 5, vizHeight - (idxVar * -1) + 5);
+    varDivNode.size(8, 8);
     varDivNode.id("year");
 
-    
     varDiv = createDiv("<strong>" + round(idxVar/yScale) + "</strong> " + idxText + " in " + year);
     varDiv.parent(vizContainer);
     varDiv.style("color", "black");
     varDiv.style("background-color", "white");
     varDiv.style("font-size", "11px");
     varDiv.style("padding", "2px");
-    varDiv.position(yearPos + 45, vizHeight - (idxVar * -1) - 10);
+    varDiv.position(yearPos + (x1 * 2), vizHeight - (idxVar * -1) - 10);
     //varDiv.size(140, 20);
     varDiv.class('divText');
     varDiv.class('text' + year);
@@ -318,8 +321,7 @@ function runHere(here) {
     //MOVE ORIGIN TO BOTTOM (WILL MULTIPLY VALUES BY -1 TO DISPLAY ABOVE)
     translate(0, yThird);
     
-    //DISPLAY LOCATION INFORMATION
-    loadJSON("here_info.json", displayInfo);
+    
     
     //SET VIZ TITLE
     var title = "Trend for the # of " + idxText + " per year:";
@@ -390,6 +392,9 @@ function runHere(here) {
     textAlign(LEFT);
     text(yearCol[lastRow], x2 + 5, round(trend2*yscale)+12);
     
+    //DISPLAY LOCATION INFORMATION
+    loadJSON("here_info.json", displayInfo);
+        
     pop();
     
     //------- DIFFERENCE VISUALIZATION --------- //
@@ -455,10 +460,10 @@ function runHere(here) {
     // SUMMARY OF CHANGE TEXT
     var changeText;
     if (diff === 0) {
-    changeText = "THE TREND INDICATES NO CHANGE IN " + idxText + " PER YEAR SINCE 1950.";  
+    changeText = "THE TREND INDICATES NO CHANGE IN " + idxText + " SINCE 1950.";  
     }
     else {
-    changeText = "THE TREND INDICATES "  + abs(diff) + morefewer + idxText + " PER YEAR SINCE 1950.";
+    changeText = "THE TREND INDICATES "  + abs(diff) + morefewer + idxText + " SINCE 1950.";
     }
     textAlign(LEFT);
     textSize(flg);
