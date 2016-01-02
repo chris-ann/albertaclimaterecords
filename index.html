@@ -9,7 +9,7 @@
   <link rel="stylesheet" type="text/css" href="css/fonts.css" />
   <link rel="stylesheet" type="text/css" href="css/normalize.css" />
   <link rel="stylesheet" type="text/css" href="css/intro.css" />
-	
+
 	<script src="//use.typekit.net/oql7cdz.js"></script>
   <script>try{Typekit.load();}catch(e){}</script>
   
@@ -22,11 +22,14 @@
   </script>
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChQroR8_qsO3DsooRB_g3BZGsQu0CG4iY"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.19&key=AIzaSyChQroR8_qsO3DsooRB_g3BZGsQu0CG4iY"></script>
 <!--  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=SET_TO_TRUE_OR_FALSE"></script>-->
   <script type="text/javascript" src="js/jssor.js"></script>
   <script type="text/javascript" src="js/jssor.slider.js"></script>
+    <script type="text/javascript" src="js/bowser.js"></script>
   <script type="text/javascript" src="js/introSlides.js"></script>
+   
+    
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.4/p5.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.4.4/addons/p5.dom.js"></script>
   <!--<script type="text/javascript" src="js/gridSketch.js"></script>-->
@@ -35,6 +38,7 @@
   <script type="text/javascript" src="js/modernizr.custom.js"></script>
   
   <script type="text/javascript" src="http://maps.stamen.com/js/tile.stamen.js?v1.3.0"></script>
+  
   
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -92,7 +96,7 @@
               <div class="introtext slide4">
               <h1>Explore the data</h1>
               <p>Through this application you can explore temperature trends and variability over 61 years for 6,834 locations in Alberta.</p>
-              <p>Each cell on the map is a 10km<sup>2</sup> region with data for six climate indices: growing season, heat waves, days over 25&deg;C, frost days, full days below 0&deg;C, and days below -25&deg;C.</p>
+              <p>Each cell on the map is a 10 x 10 km region with data for six climate indices: growing season, heat waves, days over 25&deg;C, frost days, full days below 0&deg;C, and days below -25&deg;C.</p>
               <p>&nbsp;</p>
               <a href="#" id="beginViz" style="font-size: .7vw;">START EXPLORING THE DATA</a>
             </div>
@@ -159,7 +163,7 @@
 <ul id="menu" class="menu-main">
 	<li class="trigger">
 	  <a class="icon-menu"></a>
-		<nav class="menu-wrapper transformdiv">
+		<nav class="menu-wrapper transformdiv ">
       <div class="scroller" id="selectbox">
 			<ul class="menu">
         <li><div class="icon chooseidx">CHOOSE A CLIMATE INDEX</div></li>
@@ -204,7 +208,7 @@
   			    <p><strong>A trend</strong> is an average that is calculated for each climate index based on all the available yearly temperature recordings.</p>
   			    <p><strong>Variability</strong> is the natural fluctuation of temperature recordings from year to year.</p>
   			    
-  			    <p><HR / style="color: #fff; "></p>
+  			    <HR style="color: #fff;"/>
   			    <p><a href="#" id="faq">READ MORE FAQ</a></p>
   			    </div>
   			</li>
@@ -218,7 +222,7 @@
   <div class="pageContent">
     <h2>About</h2>
     <p>Alberta Climate Records is part of a Master's Thesis project by Christine Clark at the University of Lethbridge. Her research explores methods for designing information visualizations about complex topics like climate change. The visualizations feature climate data provided by Dr. Stefan W. Kienzle, Associate Professor of Hydrology and GIS at the University of Lethbridge. The dataset is made up of nearly 5 million observed climate records between 1950 and 2010 for 6,834 locations across Alberta. </p>
-    <p>Trend and Variable visualizations were created with <a target="_blank" href="http://p5js.org/">p5.js</a></a>, an open source JavaScript Library based on <a href="http://processing.org/ target="_blank"">Processing.</a></p>
+    <p>Trend and Variable visualizations were created with <a href="http://p5js.org" target="_blank" >p5.js</a>, an open source JavaScript Library based on <a href="http://processing.org/ target="_blank"">Processing</a>.</p>
     <p>The beautiful map tiles are by <a target="_blank" href="http://stamen.com">Stamen Design</a>, under <a target="_blank" href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Map data by <a target="_blank" href="http://openstreetmap.org">OpenStreetMap</a>, under <a target="_blank" href="http://www.openstreetmap.org/copyright">ODbL</a>.</p>
     <h2>Credits:</h2>
     <p>Design and visualization programming by Christine Clark</p>
@@ -295,7 +299,7 @@ University Press, Cambridge, United Kingdom and New York, NY, USA.</p>
 
 <footer class="clrFloat">
     <ul id="footer-menu">
-    <li><a href="#"></a><em>Data and temperature trend analysis from the Kienzle lab at the University of Lethbridge</em></a></li>
+    <li><a href="#"><em>Data and temperature trend analysis from the Kienzle lab at the University of Lethbridge</em></a></li>
       <li class="export"><a href="" id="exportdoc" class="exportHide">Export Data for this Location</a></li>
     </ul>
 </footer>
